@@ -2,4 +2,4 @@
 \ Dark Blue
 \ ------------------------------------------------------------------------------
 
-include %idir%\..\spunk\loader.vfx
+include %idir%\vfxland5_01\spunk\loader.vfx
