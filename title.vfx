@@ -86,12 +86,14 @@ array] drop
     part1 ;
 
 variable skipped
+
 : ?skip
     skipped @ ?exit
     <start> pressed? if
         ." SKIP" cr 
         skipped on part3
     then ;
+
 : skippable
     skipped off ;
 
@@ -100,6 +102,6 @@ variable skipped
 
 public
 
-: title
+redef : title
     title/ ( skippable ) movie 
     show> ?skip step backdrop starfield sprites ;
