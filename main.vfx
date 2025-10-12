@@ -28,7 +28,7 @@ require laser.vfx
 require path.vfx
 require enemies.vfx
 
-\ Load the automated script and asset loads (if i'm keeping any of it).
+\ Automated script and asset loads
 \ This includes all scripts in modes\.
 load-project
 
@@ -36,6 +36,27 @@ redef : main
     title ;
 
 debug @ [if]
+
+    \ Path Test
+    \ require path.vfx
+    \ include pathtest2.vfx
+    \ pathtest
+
+    \ : start ( - )
+    \    just game test2 pathtest ;
+
+    \ title
+    game
+    \ run gauntlet-a
+    run pathtest1
+
+    \ try ../supershow/tools/sketchpad
+
+    \ sketchpad
+    \ push-order push-order push-order push-order
+    \ s" scenes/scene0.scn" scene object scene0
+    \ edit scene0 
+    \ watch this info
 
     \ Custom overlay for Sketchpad
     \ Show tags and calltimes
