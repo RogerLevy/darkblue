@@ -1,9 +1,9 @@
 require %vfxland5%/lib/claude-math.vfx
 
-tri.png 17 17 tileset tri.ts
+tri.png 17 17 +tileset tri.ts
 
-class: tri
-    actor derive
+class: %tri
+    %actor derive
     prop r
     prop m
     prop a
@@ -51,7 +51,7 @@ class;
 : !bmp
     tri.ts a @ ang>bmp ( ?flicker ) bmp ! ;
 
-tri :: init
+%tri :: init
     tri.ts 0 tile bmp !
     4. r !
     0. m !

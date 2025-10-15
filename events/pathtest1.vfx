@@ -20,7 +20,7 @@ path]
 
 :event
     shout" reset"   
-    0.75 0.5 /at enemy1 one [[
+    0.75 0.5 /at %enemy1 one [[
         infinity-path mainpath play
         0.5 mainpath -> spd !
         1.5 2. mainpath -> sx 2!

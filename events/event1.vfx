@@ -1,8 +1,8 @@
 1. tweak timing
-enemy1 tweak class
+%enemy1 tweak class
 redef 1.5 tweak speed 
 
-: *enemy ( - actor )
+: *enemy ( - %actor )
     class @ spawn ;
 
 : come-down ( xratio. - )

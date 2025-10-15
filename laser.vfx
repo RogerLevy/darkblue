@@ -1,6 +1,6 @@
-class: laser
-    actor derive
-    is-a projectile
+class: %laser
+    %actor derive
+    is-a %projectile
     prop dest-w <fixed
     prop dest-atk <int
 class;
@@ -17,12 +17,12 @@ class;
 
 public
 
-laser object beam
+%laser object beam
 
 20 beam -> atk ! 
 
 : *beam ( laser-angle. laser-length. laser-width. - beam )
-    laser beam construct
+    %laser beam construct
     beam as>
         w ! l ! a !
         at@ 2>. x 2!

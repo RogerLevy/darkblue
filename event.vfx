@@ -9,7 +9,7 @@
 \ and can be dynamically loaded, executed, and reloaded during development.
 \
 \ Core Components:
-\ - event actor class: Base class for all scripted events
+\ - %event %actor class: Base class for all scripted events
 \ - :EVENT word: Creates named events that can be executed later
 \ - DELAY mechanism: Allows events to wait for specified time periods
 \ - RUN command: Development tool for testing events with hot-reload
@@ -19,11 +19,11 @@
 \ 1. Create event files in events/ directory using :EVENT to define them
 \ 2. Use RUN <eventname> during development to test with hot-reload
 \ 3. Use REQUIRE-EVENT <eventname> to load events into the game
-\ 4. Events can spawn actor instances and set up delayed actions
+\ 4. Events can spawn %actor instances and set up delayed actions
 \
 \ Example Event File (events/intro.vfx):
-\   :event 
-\     100 100 at player spawn [[ ]]
+\   :event
+\     100 100 at %player spawn [[ ]]
 \     3. delay
 \     cr ." Welcome to the game!"
 \   ;
@@ -34,19 +34,19 @@
 \ - Supports iterative event scripting and testing
 \ ------------------------------------------------------------------------------
 
-class: event
-    actor derive
+class: %event
+    %actor derive
     prop delay-xt <xt
     prop delay-secs <fixed
     prop starting-xt <xt
-    prop curves <ref _array
+    prop curves <ref %array
     32 nprop name$ <cstring
 class;   
 
 : (suicidal) ( - )
-    act> 
-        ." Event finished: " cr 
-        me unload 
+    act>
+        ." event finished: " cr
+        me unload
         me .summary cr ;
 
 : start-event ( - )
@@ -65,12 +65,12 @@ public
     act>
         delay-secs @ passed? -exit
         x 2@ 2.> at    \ restore pen from event's position
-        (suicidal)      \ unless another delay (or act>) is called, event 
+        (suicidal)      \ unless another delay (or act>) is called, event
                         \ unalives itself on the next frame.
         delay-xt @ execute
 ;
 
-: spawn ( class - actor )
+: spawn ( class - %actor )
     at@ 2>. x 2!  \ save pen in event's position 
     one ;
 
@@ -78,7 +78,7 @@ public
 
 || : check-event-file ( a len -- )
     >event-path file-exists? not if
-        -1 abort" Event doesn't exist!"
+        -1 abort" event doesn't exist!"
     then ;
     
 : require-event ( - <event> )
@@ -103,9 +103,9 @@ public
     a len f" %s/" $private 
     a len >event-path f" ?hone %s" evaluate
     a len >pad find if
-        execute ( event ) as
+        execute ( %event ) as
     else
-        drop -1 abort" Event entry point not found! did you forget :event ? "
+        drop -1 abort" event entry point not found! did you forget :event ? "
     then ;
 
 \ : clear ( - )
@@ -137,11 +137,11 @@ public
     s" events" ['] ?load-curve each-file ;
 
 || : does-event ( - )
-    does> ( template ) event one copy [[ start-event me ]] ;
+    does> ( template ) %event one copy [[ start-event me ]] ;
 
-: :event ( - ) ( ... - event )
+: :event ( - ) ( ... - %event )
     \ Create executable event named after the file being included.
-    event currsourcename -path -ext public $object [[ 
+    %event currsourcename -path -ext public $object [[ 
         me body>name name$ place
         does-event :noname starting-xt ! ( load-curves ) 
     ]] ;
@@ -150,7 +150,7 @@ public
     dup curves @ ?bounds not if drop exit then
     curves @ [] @ #items ? ;
 
-event :: .summary ( actor - )
+%event :: .summary ( %actor - )
     11 push-attribute ." [ "
     me actor# dup 0 >= if ." #" . else drop me .name then
     cla @ .name
@@ -158,9 +158,9 @@ event :: .summary ( actor - )
     ." at: " x 2@ 2.> swap . . 
     ." ] " pop-attribute ;
 
-class: actor
+class: %actor
     prop calltime <fixed <save
 class;
 
-: ready? ( actor - flag )
+: ready? ( %actor - flag )
     [[ calltime @ time @ <= ]] ;

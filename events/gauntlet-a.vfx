@@ -1,6 +1,6 @@
 aka float floating
 
-: towards ( actor speed. - ) 
+: towards ( %actor speed. - ) 
     >r pos@ me pos@ 2- ang r> vec vx 2! 
     act> ;
 

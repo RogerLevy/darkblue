@@ -1,4 +1,4 @@
-orb.png 13 13 tileset orb.ts
+orb.png 13 13 +tileset orb.ts
 
 \ orb.ts animation orb.anm  0 3 range, 3 0 range, 
 
@@ -14,9 +14,9 @@ create orb-anim cell array[
     orb.ts 0 tile ,
 array] drop
 
-class: orb
-    actor derive
-    is-a vessel
+class: %orb
+    %actor derive
+    is-a %vessel
 class;
 
 : ?laser
@@ -24,7 +24,7 @@ class;
     me beam laser-hit? -exit
     me unload ;
 
-orb :: init
+%orb :: init
     orb2.png bmp !
     0.5 r !
     10. m !

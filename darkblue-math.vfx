@@ -293,7 +293,7 @@ fast[ \ disable validations for speed
     \ Check collision
     distance half-width er f+ f< ;
 
-: laser-hit?  ( actor beam - f )
+: laser-hit?  ( %actor beam - f )
     dup -> en @ 0= if 2drop 0 exit then
     [[ x 2@ a @ l @ w @ ]] seg-hit? ;
 

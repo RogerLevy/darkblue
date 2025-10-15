@@ -90,7 +90,7 @@ path]
         
 
 : *pathguy2
-    200 100 at enemy1 one as>
+    200 100 at %enemy1 one as>
         infinity-path pp1 path-follow  1.0 pp1 path-speed
         0. n1 !
         \ 2. 2. pp1 path-scale

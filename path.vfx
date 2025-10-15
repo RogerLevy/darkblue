@@ -17,7 +17,7 @@
 \ Segment class
 \ =============================================================================
 
-class: segment
+class: %segment
     prop segtype <int           \ segment type (waypoint/event)
     prop x <fixed               \ target position
     prop y <fixed               \ 
@@ -37,18 +37,18 @@ class;
 \ Path class
 \ =============================================================================
 
-class: path
+class: %path
     \ TODO: These should just be embedded
-    prop segments <ref _array   \ addr -> array[segment]
-    prop alpdata <ref _array    \ addr -> array[x., y.]
-    prop easedata <ref _array   \ addr -> array[segment]
+    prop segments <ref %array   \ addr -> array[segment]
+    prop alpdata <ref %array    \ addr -> array[x., y.]
+    prop easedata <ref %array   \ addr -> array[segment]
 class;
 
 \ =============================================================================
 \ Path player
 \ =============================================================================
 
-trait: player
+trait: %player
     prop pos <fixed            \ progress 0-1.0 
     prop spd <fixed
     :: play ( obj - ) drop ;
@@ -56,13 +56,13 @@ trait: player
 \    :: playing? ( - flag ) stub ;   \ TODO: add after totemizing samples
 trait;
 
-class: pathplayer
-    actor derive
-    is-a player
+class: %pathplayer
+    %actor derive
+    is-a %player
 
     prop playing 
-    prop path0 <ref path        \ pointer to path definition
-    prop seg <int               \ current segment index
+    prop path0 <ref %path        \ pointer to %path definition
+    prop seg <int               \ current %segment index
     prop startx <fixed          \ starting position
     prop starty <fixed          \ 
     prop starttime <int         \ milliseconds when started
@@ -83,24 +83,24 @@ class: pathplayer
 
 class;
 
-\ extend ACTOR with path player references; up to 3
-class: actor
-    prop pp1 <ref pathplayer
-    prop pp2 <ref pathplayer
-    prop pp3 <ref pathplayer
+\ extend %actor with %path %player references; up to 3
+class: %actor
+    prop pp1 <ref %pathplayer
+    prop pp2 <ref %pathplayer
+    prop pp3 <ref %pathplayer
 class;
 
 \ =============================================================================
 \ Status checks
 \ =============================================================================
 
-|| : >segments ( path -- array )
+|| : >segments ( %path -- array )
     -> segments @ ;
 
-|| : segment[] ( seg# path -- segment )
+|| : segment[] ( seg# %path -- %segment )
     >segments [] ;
 
-|| : #segments ( path - n )
+|| : #segments ( %path - n )
     >segments #items ;
 
 || : (timespan) ( array[segment] -- ms )
@@ -109,7 +109,7 @@ class;
         i a [] -> duration @ +
     loop ;
     
-|| : timespan ( path -- ms )
+|| : timespan ( %path -- ms )
     >segments (timespan) ;
 
 || : (leg) ( progress. array[segment] -- seg# local-progress. )
@@ -125,10 +125,10 @@ class;
     loop
     a #items 1 - ` 1.0 ` ;
 
-|| : leg ( progress. path -- seg# local-progress. )
+|| : leg ( progress. %path -- seg# local-progress. )
     >segments (leg) ;
 
-: endxy ( seg# path -- x. y. )
+: endxy ( seg# %path -- x. y. )
     {: seg# p :}
     seg# p segment[] -> segtype @ SEG_EVENT = if
         seg# 0 <= if 0 0 else seg# 1 - p segment[] -> x 2@ then
@@ -187,10 +187,10 @@ class;
         t \ default: no change
     endcase ;
 
-|| : ease ( n. segment - f: n ) 
+|| : ease ( n. %segment - f: n ) 
     [[ p>f in-amt @ p>f out-amt @ p>f easetype @ ?ease ]] ;
     
-|| : pinpoint-eased ( playback ) ( seg# local-progress. path - x. y. )
+|| : pinpoint-eased ( playback ) ( seg# local-progress. %path - x. y. )
     {: seg# n pth | f: fp seg sx sy dx dy t :}
     
     seg# pth segment[] to seg
@@ -207,7 +207,7 @@ class;
         seg [[ c1y @ c2y @ ]] sy dup 2+ 2p>f `` bezier-y f>p
 ;
 
-|| : pinpoint ( playback ) ( seg# local-progress. path - x. y. )
+|| : pinpoint ( playback ) ( seg# local-progress. %path - x. y. )
     {: seg# n pth | f: fp seg sx sy dx dy t :}
     
     seg# pth segment[] to seg
@@ -258,7 +258,7 @@ class;
 \ Arc-length parameterization for even motion
 \ =============================================================================
 
-|| pathplayer object alp-pp
+|| %pathplayer object alp-pp
 || 2variable first-point
 
 fast[ \ validations are way too slow for this
@@ -351,7 +351,7 @@ fast]
 variable drift-error-x
 variable drift-error-y
 
-: alp-position ( pathplayer - ) ( progress. - x. y. )
+: alp-position ( %pathplayer - ) ( progress. - x. y. )
     {: progress | frame-index floor-frame ceil-frame fract
        floor-x floor-y ceil-x ceil-y
        raw-x raw-y corrected-x corrected-y :}
@@ -389,7 +389,7 @@ variable drift-error-y
 
     corrected-x corrected-y ;
     
-: alp-displacement ( pathplayer ) ( progress1. progress2. - dx. dy. )
+: alp-displacement ( %pathplayer ) ( progress1. progress2. - dx. dy. )
     swap alp-position 2>r alp-position 2r> 2- ;
 
 : getstart ( seg# array - n )
@@ -424,15 +424,15 @@ variable drift-error-y
 \ Actor integration
 \ =============================================================================
 
-pathplayer :: init ( - )
+%pathplayer :: init ( - )
     gametime drop starttime ! ;
 
-\ pathplayer :: playing? ( - flag )
+\ %pathplayer :: playing? ( - flag )
 \     playing @ ;
 
-|| : ?pp ( a - pathplayer )
+|| : ?pp ( a - %pathplayer )
     dup @ ?dup if nip exit then
-    pathplayer one dup rot ! 
+    %pathplayer one dup rot ! 
     dup as> you owner ! act> velstep sx 2@ 2p* vx 2! phys off ;
 
 : pathplayer[] ( n -- a ) 
@@ -446,10 +446,10 @@ pathplayer :: init ( - )
         then
     loop ;
     
-pathplayer :: play ( path - )
+%pathplayer :: play ( %path - )
     path0 !  path0 @ -> alpdata @ alp !  0 pos !  playing on ;
 
-pathplayer :: stop ( - )
+%pathplayer :: stop ( - )
     playing off ;
 
 : #laps ( -- n )
@@ -467,12 +467,12 @@ pathplayer :: stop ( - )
     dx 2 3 */ 
     dy 2 3 */ ;
 
-: curve! ( segment ) ( c1x c1y c2x c2y - )
+: curve! ( %segment ) ( c1x c1y c2x c2y - )
     c2x 2! c1x 2! ;
 
 2variable last-coord
-: waypoint ( duration. - segment ) 
-    segment instance [[ 
+: waypoint ( duration. - %segment ) 
+    %segment instance [[ 
         1000 p* duration !   \ temporary: convert fixed seconds to integer milliseconds 
         SEG_WAYPOINT segtype !
         at@ 2>. x 2!
@@ -491,11 +491,11 @@ pathplayer :: stop ( - )
 : *alpdata ( - )
     2 cells array[ alp, array] alpdata ! ;
 
-: path[ create path instance [[ 0 0 last-coord 2! ;
+: path[ create %path instance [[ 0 0 last-coord 2! ;
 : path] ]] ; 
 
-: segments[ segment sizeof array[ ;
+: segments[ %segment sizeof array[ ;
 : segments] array] segments ! ;
 
-: easing[ *alpdata segment sizeof array[ ;
+: easing[ *alpdata %segment sizeof array[ ;
 : easing] array] easedata ! ;

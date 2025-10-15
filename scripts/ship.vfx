@@ -2,8 +2,10 @@ require scripts\orb.vfx
 require scripts\tri.vfx
 require scripts\turret.vfx
 
+ship.png 27 27 +tileset ship.ts
+
 class: ship
-    actor derive
+    %actor derive
     prop r
     prop m
     prop flash-ctr
@@ -33,7 +35,7 @@ ship :: recovering? ( - flag )
     for
         360. rnd dup
         me swap 20 vec from  \ note FROM takes ints
-        tri one [[
+        %tri one [[
             1. vec vx 2!
         ]]
     loop ;
@@ -51,17 +53,17 @@ ship :: recovering? ( - flag )
             vx 2@ 0.94 dup 2p* vx 2! ;
 
 : *lightning ( - )
-    lightning one as> act> act> act> me unload ;
+    %lightning one as> act> act> act> me unload ;
 
 : slowdown-starfield ( - )
-    actor one as> act>
+    %actor one as> act>
         \ starfield-speed 0.06 - 0 max to starfield-speed ;
         starfield-speed 0.94 p* to starfield-speed ;
 
 : shatter ( - )
     200 for
         me 360. rnd 14 rnd vec from
-        dot one [[ 360. rnd 2. rnd vec vx 2! ]] 
+        %dot one [[ 360. rnd 2. rnd vec vx 2! ]] 
     loop
     me unload ;
 
@@ -90,7 +92,7 @@ ship :: damage ( n - )
     dup expel 
     2 + flash-ctr @ + 62 min flash-ctr ! ;
 
-: hit-orb 
+: hit-orb
     me recovering? ?exit
     ( you = player )
     5 you damage
@@ -122,8 +124,8 @@ ship :: damage ( n - )
     actives>
         r @ -exit
         you me rhit? -exit
-        me enemy is? if hit-enemy exit then
-        me orb is? if hit-orb exit then
+        me %enemy is? if hit-enemy exit then
+        me %orb is? if hit-orb exit then
         me recovering? ?exit
         worth @ if hit-tri exit then ;
 
@@ -153,7 +155,7 @@ ship :: damage ( n - )
 
 : /turret
     turret0 @ ?exit
-    turret one own turret0 ! ;
+    %turret one own turret0 ! ;
 
 ship :: init
     me to p1

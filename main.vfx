@@ -32,6 +32,7 @@ require enemies.vfx
 \ This includes all scripts in modes\.
 load-project
 
+
 redef : main
     title ;
 
@@ -54,7 +55,7 @@ debug @ [if]
 
     \ sketchpad
     \ push-order push-order push-order push-order
-    \ s" scenes/scene0.scn" scene object scene0
+    \ s" scenes/scene0.scn" %scene object scene0
     \ edit scene0 
     \ watch this info
 
