@@ -1,5 +1,5 @@
 \ Common classifiers
-trait: vessel
+trait: %vessel
     prop hp <int <save
     prop r  <fixed <save \ radius
     prop m  <fixed <save \ mass
@@ -10,39 +10,39 @@ trait: vessel
     :: recovering? ( - flag ) 0 ;
 trait;
 
-trait: projectile
+trait: %projectile
     prop r <fixed <save \ radius
-    prop firer <ref _object
+    prop firer <ref %object
     prop atk <int <save
     prop a <fixed <save \ angle
     prop w <fixed \ width 
     prop l <fixed \ length
 trait;
 
-trait: pickup
+trait: %pickup
     prop worth <int <save \ when non-zero, makes object a collectible source of energy
 trait;
 
-class: actor
-    works-with vessel
-    works-with projectile
-    works-with pickup
-    prop owner <ref actor
+class: %actor
+    works-with %vessel
+    works-with %projectile
+    works-with %pickup
+    prop owner <ref %actor
 class;
 
 \ Common protocols
-_object :: damage ( n - ) negate hp +! ;
-_object :: kill ( - ) me unload ;
+%object :: damage ( n - ) negate hp +! ;
+%object :: kill ( - ) me unload ;
 : die  me kill ;
 
 \ Common logic
-redef actor :: serializable? ( - flag ) 
+redef %actor :: serializable? ( - flag ) 
     \ this is fine for now 10/3
     \ TODO: for support for multiple trait logic contributions
     \ we'd need a different approach, such as a static bitmask property.
     actor:serializable? firer @ 0= and ;
 
-: fired? ( firer actor - b )
+: fired? ( firer %actor - b )
     over 0= if 2drop 0 exit then
     -> firer @ = ;
  

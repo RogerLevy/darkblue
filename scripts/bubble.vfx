@@ -1,8 +1,8 @@
-class: bubble
-    actor derive
+class: %bubble
+    %actor derive
     prop r
 
-bubble :: init ( - )
+%bubble :: init ( - )
     ;
     
 : draw-bubble ( - )
@@ -11,10 +11,10 @@ bubble :: init ( - )
 
 public
 
-: *bubble ( - bubble )
-    bubble one [[ 10. r ! me ]] ;
+: *bubble ( - %bubble )
+    %bubble one [[ 10. r ! me ]] ;
 
 : bubbles
-    actives> me bubble is? -exit draw-bubble ;
+    actives> me %bubble is? -exit draw-bubble ;
 
 class; 

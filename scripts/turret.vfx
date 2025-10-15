@@ -11,15 +11,15 @@ require scripts\shot.vfx
 require tween.vfx
 require scripts\ship.vfx
 
-class: turret
-    actor derive
+class: %turret
+    %actor derive
     prop shooting
     prop shaking     \ 0 ~ 1.0
     prop aim <fixed <save
     prop charging
 class;
 
-turret.png 32 32 tileset turret.ts
+turret.png 32 32 +tileset turret.ts
 
 : ang>bmp ( ts n. - n )
     360. umod dup >r
@@ -61,11 +61,11 @@ array] drop
         act>
             ?cull ;
 
-: fire-pea ( atk - ) *shoot* 8. shot shoot ;
+: fire-pea ( atk - ) *shoot* 8. %shot shoot ;
 : pea ( atk - ) fire-pea  -1 energy +! ;
 
-: fire-medium ( atk - ) *shoot* 8. missile1 shoot ;
-: fire-large ( atk - ) *shoot* 8. missile2 shoot ;
+: fire-medium ( atk - ) *shoot* 8. %missile1 shoot ;
+: fire-large ( atk - ) *shoot* 8. %missile2 shoot ;
 
 : laser-physics
     owner @ [[ x 2@ vx 2@ 2+ ]] x 2!
@@ -108,7 +108,7 @@ array] drop
 
 create charge-levels 4 cells array[
     \ charge , cost , atk , xt ,
-    10  , 0 , 0 ,   ' drop , 
+    10  , 0 , 0 ,   ' drop ,
     20  , 10 , 5 ,   ' fire-medium , \ medium projectile, damages one enemy
     35  , 25 , 10 ,  ' fire-large ,  \ large projectile, damages one enemy
     60 ,  50 , 1 ,    ' fire-thin ,    \ thin laser cannon, damages multiple enemies over a brief time
@@ -124,7 +124,7 @@ charge-levels #items cell array bars
 
 : *bars ( - )
     charge-levels #items 1 do
-        bar one own i bars [] !
+        %bar one own i bars [] !
     loop ;
 
 : !bars ( - )
@@ -259,7 +259,7 @@ charge-levels #items cell array bars
 : !bmp ( - )
     turret.ts a @ ang>bmp flicker bmp ! ;
 
-turret :: init
+%turret :: init
     turret.ts 0 tile bmp !
     *bars
     -1 charge-level !

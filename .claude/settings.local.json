@@ -9,7 +9,8 @@
       "Bash(pip install:*)",
       "Bash(ls:*)",
       "Bash(rg:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(perl:*)"
     ],
     "deny": []
   }
