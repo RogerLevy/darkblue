@@ -75,11 +75,11 @@ class: %pathplayer
                                 \ (optional)
 \   property lastevent            \ n \ last event index fired
 
-    template [[
+    template { 
         1.0 spd !
         1.0 1.0 sx 2!
         1 ppdir !
-    ]]
+    } 
 
 class;
 
@@ -188,7 +188,7 @@ class;
     endcase ;
 
 || : ease ( n. %segment - f: n ) 
-    [[ p>f in-amt @ p>f out-amt @ p>f easetype @ ?ease ]] ;
+    { p>f in-amt @ p>f out-amt @ p>f easetype @ ?ease } ;
     
 || : pinpoint-eased ( playback ) ( seg# local-progress. %path - x. y. )
     {: seg# n pth | f: fp seg sx sy dx dy t :}
@@ -202,9 +202,9 @@ class;
     seg# pth endxy to dy to dx
     
     fp ` sx dx 2p>f ``
-        seg [[ c1x @ c2x @ ]] sx dup 2+ 2p>f `` bezier-x f>p
+        seg { c1x @ c2x @ } sx dup 2+ 2p>f `` bezier-x f>p
     fp ` sy dy 2p>f ``
-        seg [[ c1y @ c2y @ ]] sy dup 2+ 2p>f `` bezier-y f>p
+        seg { c1y @ c2y @ } sy dup 2+ 2p>f `` bezier-y f>p
 ;
 
 || : pinpoint ( playback ) ( seg# local-progress. %path - x. y. )
@@ -219,9 +219,9 @@ class;
     seg# pth endxy to dy to dx
     
     fp ` sx dx 2p>f ``
-        seg [[ c1x @ c2x @ ]] sx dup 2+ 2p>f `` bezier-x f>p
+        seg { c1x @ c2x @ } sx dup 2+ 2p>f `` bezier-x f>p
     fp ` sy dy 2p>f ``
-        seg [[ c1y @ c2y @ ]] sy dup 2+ 2p>f `` bezier-y f>p
+        seg { c1y @ c2y @ } sy dup 2+ 2p>f `` bezier-y f>p
 ;
 
 \ =============================================================================
@@ -269,7 +269,7 @@ fast[ \ validations are way too slow for this
        f: prev-length f: next-length f: ratio bracket-index 
        seg# local-progress :}
     
-    alp-pp [[
+    alp-pp { 
         1.0 1.0 sx 2!
         
         path0 timespan to total-duration
@@ -343,7 +343,7 @@ fast[ \ validations are way too slow for this
         \ Clean up
         coord-table free throw
         length-table free throw
-    ]] ;
+    } ;
 fast]
     
 || : point@  0 alp @ #items 1 - clamp alp @ [] 2@ ; 
@@ -472,15 +472,15 @@ variable drift-error-y
 
 2variable last-coord
 : waypoint ( duration. - %segment ) 
-    %segment instance [[ 
+    %segment instance { 
         1000 p* duration !   \ temporary: convert fixed seconds to integer milliseconds 
         SEG_WAYPOINT segtype !
-        at@ 2>. x 2!
+        at@ 2>p x 2!
         1. in-amt ! 1. out-amt !
-        last-coord 2@ 2>.
+        last-coord 2@ 2>p
             x 2@ (linear) curve!
         at@ last-coord 2! 
-    me ]] ;
+    me } ;
     
 : ease! ( n - )
     easetype ! ;
@@ -489,13 +489,13 @@ variable drift-error-y
     out-amt ! in-amt ! ;
 
 : *alpdata ( - )
-    2 cells array[ alp, array] alpdata ! ;
+    %fixed2 array[ alp, array] alpdata ! ;
 
-: path[ create %path instance [[ 0 0 last-coord 2! ;
-: path] ]] ; 
+: path[ create %path instance { 0 0 last-coord 2! ;
+: path] } ; 
 
-: segments[ %segment sizeof array[ ;
+: segments[ %segment array[ ;
 : segments] array] segments ! ;
 
-: easing[ *alpdata %segment sizeof array[ ;
+: easing[ *alpdata %segment array[ ;
 : easing] array] easedata ! ;

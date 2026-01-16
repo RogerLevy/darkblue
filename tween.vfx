@@ -50,18 +50,18 @@ class;
 
 || : val n1 @ n2 @ over - s1 @ 1. min d @ execute ease @ execute ;
 || : step spd @ s1 +! ;
-: ?done s1 @ 1. >= if ( xt @ parent @ [[ ?execute ]] ) me unload then ;
+: ?done s1 @ 1. >= if ( xt @ parent @ { ?execute } ) me unload then ;
 || : tween-act  act> step val adr @ ! ?done ;
 || : len! 1. swap p/ 60 / spd ! ;
 
 \ Tweening
 
 : *tween ( ease dir adr n2. len. - tween )
-    _tween one [[
+    _tween one { 
         len! n2 ! adr ! d ! ease !
         adr @ @ n1 !
         tween-act
-    me ]] ;
+    me } ;
 
 : tween ( ease dir adr n2. len. - )
     *tween drop ;

@@ -2,7 +2,7 @@
 \ %enemy Factory System - Living Factory Pattern
 \ ==============================================================================
 
-(( 
+((
 <outdated-help>
 SUMMARY: Dynamic %enemy class generation with hot-reload capability. Combines
 Factory, Prototype, and Strategy patterns for rapid game development iteration.
@@ -48,7 +48,10 @@ class;
 
 aka enemies %enemy
 
-%enemy template [[
+BITMAP %project%/dat/gfx/enemy1.png
+BITMAP %project%/dat/gfx/enemy23.png
+
+%enemy template {
     enemy1.png bmp !
     1 hp !
     12. r !
@@ -56,7 +59,7 @@ aka enemies %enemy
     30 atk !
     20 bounty !
     80 firing-rate !
-]]
+} 
 
 variable tris-next#  512 tris-next# !
 
@@ -72,14 +75,14 @@ private
     {: | c :}
     s" tri" find-class to c
     next# @ >r 512 next# !
-    for c one [[ 360. rnd .5 rnd .5 + vec vx 2+! ]] loop
+    for c one { 360. rnd .5 rnd .5 + vec vx 2+! } loop
     r> next# ! ;
 
 : burst-ring ( n - )
     {: | c :}
     s" tri" find-class to c
     next# @ >r 512 next# !
-    for c one [[ 360. rnd .05 rnd .95 + vec vx 2+! ]] loop
+    for c one { 360. rnd .05 rnd .95 + vec vx 2+! } loop
     r> next# ! ;
 
 %enemy :: kill
@@ -92,10 +95,10 @@ private
 : shoot ( - )
     next# @ >r
     4096 512 + next# !
-    me 0 0 from s" orb" find-class one [[
+    me 0 0 from s" orb" find-class one { 
         you firer !
         p1 pos@ me pos@ 2- ang 1. vec vx 2!
-    ]]
+    } 
     \ next# @ orbs-next# !
     r> next# ! ;
 
@@ -112,7 +115,7 @@ private
     
 : ?bullets
     me beam laser-hit? if
-        beam [[ atk @ you damage ]]
+        beam { atk @ you damage } 
         exit
     then
     actives>

@@ -36,11 +36,11 @@ class;
 : die  me kill ;
 
 \ Common logic
-redef %actor :: serializable? ( - flag ) 
-    \ this is fine for now 10/3
-    \ TODO: for support for multiple trait logic contributions
-    \ we'd need a different approach, such as a static bitmask property.
-    actor:serializable? firer @ 0= and ;
+\ redef %actor :: serializable? ( - flag ) 
+\     \ this is fine for now 10/3
+\     \ TODO: for support for multiple trait logic contributions
+\     \ we'd need a different approach, such as a static bitmask property.
+\     actor:serializable? firer @ 0= and ;
 
 : fired? ( firer %actor - b )
     over 0= if 2drop 0 exit then
@@ -79,6 +79,20 @@ aka <start> <enter>
 : center-pos  160. 120. ;
 : player-pos  p1 pos@ ;
 : chance ( dividend divisor -- f ) rnd swap < ;
+
+BITMAP %project%/dat/gfx/backdrop.png
+
+\ Samples
+SAMPLE %project%/dat/smp/shoot.ogg
+SAMPLE %project%/dat/smp/snd-01.ogg
+SAMPLE %project%/dat/smp/snd-02.ogg
+SAMPLE %project%/dat/smp/snd-03.ogg
+SAMPLE %project%/dat/smp/snd-04.ogg
+SAMPLE %project%/dat/smp/snd-05.ogg
+SAMPLE %project%/dat/smp/snd-06.ogg
+SAMPLE %project%/dat/smp/snd-07.ogg
+SAMPLE %project%/dat/smp/snd-08.ogg
+SAMPLE %project%/dat/smp/snd-09.ogg
 
 : backdrop  0 0 at backdrop.png put ;
 : (blank) show> backdrop ;

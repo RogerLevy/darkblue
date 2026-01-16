@@ -1,0 +1,9 @@
+BITMAP %project%/dat/gfx/text-normal.png
+
+class: %text-normal
+    %actor derive
+
+    :: init
+        text-normal.png bmp ! ;
+
+class;

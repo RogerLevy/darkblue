@@ -1,0 +1,9 @@
+BITMAP %project%/dat/gfx/bar.png
+
+class: %bar
+    %actor derive
+
+%bar :: init
+    bar.png bmp ! ;
+
+class;

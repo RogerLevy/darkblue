@@ -1,10 +1,14 @@
 \ ------------------------------------------------------------------------------
 \ Dark Blue Title Screen
 \ ------------------------------------------------------------------------------
-require starfield.vfx
-require tween.vfx
+REQUIRE starfield.vfx
+REQUIRE tween.vfx
+REQUIRE %project%/scripts/title-arrow.vfx
+REQUIRE %project%/scripts/text-normal.vfx
+REQUIRE %project%/scripts/text-resilient.vfx
 
-title.png 291 41 +tileset title.ts
+BITMAP %project%/dat/gfx/title.png
+title.png 291 41 TILESET-FROM title.ts
 
 private
 variable gamemode
@@ -14,7 +18,7 @@ variable gamemode
 
 \ Logo
 : *title
-    *actor as>
+    %actor one as>
         title.ts 0 tile bmp !
         me ;
 
@@ -35,10 +39,10 @@ variable gamemode
 
 : part3
     160 100 at *title drop
-    90 150 at %text-normal one [[ ]]
-    230 150 at %text-resilient one [[ ]]
+    90 150 at %text-normal one { } 
+    230 150 at %text-resilient one { } 
     *selector
-    0.1 timer>  *actor as>  act>
+    0.1 timer>  %actor one as>  act>
         <start> pressed? if me unload  part4 then ;
 
 : part2
@@ -49,7 +53,7 @@ variable gamemode
 
 : logoh title.ts 0 tile bmph ;
 
-create ntable cell array[
+create ntable %int array[
     0 ,
     1 ,
     1 ,
@@ -70,7 +74,7 @@ create ntable cell array[
     40 ,
 array] drop
 
-: revealing n1 @ ntable n[] @ ;
+: revealing n1 @ ntable el@ ;
 
 : part1
     just

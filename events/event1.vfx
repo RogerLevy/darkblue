@@ -15,16 +15,16 @@ redef 1.5 tweak speed
 
 :event
     gamew gameh 0.75 0.5 2p* at
-    s" bigbug" find-class one [[ ]] 
+    s" bigbug" find-class one { } 
 
     begin        
-    *enemy [[ 0.6 come-down ]]    
+    *enemy { 0.6 come-down }    
     timing @ delay
-    *enemy [[ 0.7 come-up ]]
+    *enemy { 0.7 come-up } 
     timing @ delay
-    *enemy [[ 0.8 come-down ]]    
+    *enemy { 0.8 come-down }    
     timing @ delay
-    *enemy [[ 0.9 come-up ]]
+    *enemy { 0.9 come-up } 
     timing @ 4 * delay
     again
 ; 

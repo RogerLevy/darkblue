@@ -200,7 +200,7 @@ def print_summary(distances, issues, positions):
         
         # Look for clusters of problems
         problem_clusters = []
-        current_cluster = [all_problem_frames[0][0]]
+        current_cluster = [all_problem_frames[0][0} 
         
         for i in range(1, len(all_problem_frames)):
             if all_problem_frames[i][0] - all_problem_frames[i-1][0] <= 3:  # Within 3 frames
@@ -208,7 +208,7 @@ def print_summary(distances, issues, positions):
             else:
                 if len(current_cluster) >= 3:  # 3 or more consecutive problems
                     problem_clusters.append(current_cluster)
-                current_cluster = [all_problem_frames[i][0]]
+                current_cluster = [all_problem_frames[i][0} 
         
         if len(current_cluster) >= 3:
             problem_clusters.append(current_cluster)

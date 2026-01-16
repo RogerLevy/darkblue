@@ -1,0 +1,9 @@
+BITMAP %project%/dat/gfx/lightning.png
+
+class: %lightning
+    %actor derive
+
+%lightning :: init
+    lightning.png bmp ! ;
+
+class;

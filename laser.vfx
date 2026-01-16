@@ -25,7 +25,7 @@ public
     %laser beam construct
     beam as>
         w ! l ! a !
-        at@ 2>. x 2!
+        at@ 2>p x 2!
         halt
         en on me ;
 

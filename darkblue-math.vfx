@@ -295,7 +295,7 @@ fast[ \ disable validations for speed
 
 : laser-hit?  ( %actor beam - f )
     dup -> en @ 0= if 2drop 0 exit then
-    [[ x 2@ a @ l @ w @ ]] seg-hit? ;
+    { x 2@ a @ l @ w @ } seg-hit? ;
 
 : bubble-constraint-force ( center-obj trapped-obj f: bubble-radius f: damping -- x-force. y-force. )
     {: center trapped f: bubble-radius f: damping |

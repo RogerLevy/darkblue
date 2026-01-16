@@ -23,7 +23,7 @@
 \
 \ Example Event File (events/intro.vfx):
 \   :event
-\     100 100 at %player spawn [[ ]]
+\     100 100 at %player spawn { } 
 \     3. delay
 \     cr ." Welcome to the game!"
 \   ;
@@ -41,7 +41,7 @@ class: %event
     prop starting-xt <xt
     prop curves <ref %array
     32 nprop name$ <cstring
-class;   
+class;    
 
 : (suicidal) ( - )
     act>
@@ -51,7 +51,7 @@ class;
 
 : start-event ( - )
     at@ 2>r
-    at@ 2>. x 2! 
+    at@ 2>p x 2! 
     (suicidal)
     \ sp@ cell+ >r
     starting-xt @ execute
@@ -64,14 +64,14 @@ public
     delay-secs ! r> delay-xt ! 
     act>
         delay-secs @ passed? -exit
-        x 2@ 2.> at    \ restore pen from event's position
+        x 2@ 2>i at    \ restore pen from event's position
         (suicidal)      \ unless another delay (or act>) is called, event
                         \ unalives itself on the next frame.
         delay-xt @ execute
 ;
 
 : spawn ( class - %actor )
-    at@ 2>. x 2!  \ save pen in event's position 
+    at@ 2>p x 2!  \ save pen in event's position 
     one ;
 
 : >event-path  f" events\%s.vfx" ;
@@ -86,7 +86,7 @@ public
     bl parse buf[ place
     push-order
     buf[ count check-event-file
-    buf[ count f" %s/" $private 
+    buf[ count f" %s/" sprivate  
     buf[ count >event-path required
     pop-order ;
 
@@ -100,7 +100,7 @@ public
     bl parse to len to a
     a len check-event-file
     a len f" run %s" hone!
-    a len f" %s/" $private 
+    a len f" %s/" sprivate  
     a len >event-path f" ?hone %s" evaluate
     a len >pad find if
         execute ( %event ) as
@@ -123,7 +123,7 @@ public
     {: fn len :} 
     fn len my-curve? if
         cr fn len type
-        2 cells fn len array[ file, array] curves @ push
+        %fixed2 array[ fn len file, array] curves @ push
     then ;
 
 || : count-curve ( fn len - )
@@ -137,25 +137,25 @@ public
     s" events" ['] ?load-curve each-file ;
 
 || : does-event ( - )
-    does> ( template ) %event one copy [[ start-event me ]] ;
+    does> ( template ) %event one copy { start-event me } ;
 
 : :event ( - ) ( ... - %event )
     \ Create executable event named after the file being included.
-    %event currsourcename -path -ext public $object [[ 
+    %event currsourcename -path -ext public $object { 
         me body>name name$ place
         does-event :noname starting-xt ! ( load-curves ) 
-    ]] ;
+    } ;
 
 : curve[] ( n - )
-    dup curves @ ?bounds not if drop exit then
+    \ dup curves @ ?bounds not if drop exit then
     curves @ [] @ #items ? ;
 
 %event :: .summary ( %actor - )
     11 push-attribute ." [ "
-    me actor# dup 0 >= if ." #" . else drop me .name then
+    \ me actor# dup 0 >= if ." #" . else drop me .name then
     cla @ .name
     name$ count type space
-    ." at: " x 2@ 2.> swap . . 
+    ." at: " x 2@ 2>i swap . . 
     ." ] " pop-attribute ;
 
 class: %actor
@@ -163,4 +163,4 @@ class: %actor
 class;
 
 : ready? ( %actor - flag )
-    [[ calltime @ time @ <= ]] ;
+    { calltime @ time @ <= } ;

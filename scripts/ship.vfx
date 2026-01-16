@@ -1,7 +1,10 @@
 require scripts\orb.vfx
 require scripts\tri.vfx
 require scripts\turret.vfx
+REQUIRE %project%/scripts/lightning.vfx
+REQUIRE %project%/scripts/dot.vfx
 
+BITMAP %project%/dat/gfx/ship.png
 ship.png 27 27 +tileset ship.ts
 
 class: ship
@@ -35,9 +38,9 @@ ship :: recovering? ( - flag )
     for
         360. rnd dup
         me swap 20 vec from  \ note FROM takes ints
-        %tri one [[
+        %tri one { 
             1. vec vx 2!
-        ]]
+        } 
     loop ;
 
 : decelerate ( n. - )
@@ -63,7 +66,7 @@ ship :: recovering? ( - flag )
 : shatter ( - )
     200 for
         me 360. rnd 14 rnd vec from
-        %dot one [[ 360. rnd 2. rnd vec vx 2! ]] 
+        %dot one { 360. rnd 2. rnd vec vx 2! } 
     loop
     me unload ;
 
@@ -96,9 +99,9 @@ ship :: damage ( n - )
     me recovering? ?exit
     ( you = player )
     5 you damage
-    you [[
+    you { 
         you me collision-force3 ( 0.5 0.5 2p* ) vx 2+!  \ knockback
-    ]]
+    } 
     me unload ;
 
 : hit-tri
@@ -108,9 +111,9 @@ ship :: damage ( n - )
 : hit-enemy
     me recovering? ?exit
     30 you damage
-    you [[
+    you { 
         you me collision-force3 3 3 2* vx 2+!  \ knockback
-    ]] ;
+    } ;
 
 : &screen
     me 0.9 screen-bounce-force vx 2+!

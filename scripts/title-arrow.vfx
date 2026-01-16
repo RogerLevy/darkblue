@@ -1,0 +1,9 @@
+BITMAP %project%/dat/gfx/title-arrow.png
+
+class: %title-arrow
+    %actor derive
+
+    :: init
+        title-arrow.png bmp ! ;
+
+class;

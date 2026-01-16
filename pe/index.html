@@ -184,15 +184,15 @@
                 // Format with column alignment for: "-999 -999 at", "99999 waypoint", "-999.9 -999.9 -999.9 -999.9 curve", "0 ease", "-1.23 -1.23 strength"
                 const atPart = `${point.x} ${point.y} at`.padEnd(15);  // accommodate "-999 -999 at"
                 const waypointPart = `${point.duration} waypoint`.padEnd(17);  // accommodate "99999 waypoint"
-                const curvePart = `[[ ${cp1x.toFixed(1)} ${cp1y.toFixed(1)} ${cp2x.toFixed(1)} ${cp2y.toFixed(1)} curve`.padEnd(40);  // accommodate "-999.9 -999.9 -999.9 -999.9 curve"
+                const curvePart = `{ ${cp1x.toFixed(1)} ${cp1y.toFixed(1)} ${cp2x.toFixed(1)} ${cp2y.toFixed(1)} curve`.padEnd(40);  // accommodate "-999.9 -999.9 -999.9 -999.9 curve"
                 const easePart = `${point.easing} ease`.padEnd(8);  // accommodate "0 ease"
                 const strengthPart = `${point.inStrength.toFixed(2)} ${point.outStrength.toFixed(2)} strength`;  // accommodate "-1.23 -1.23 strength"
                 
-                return `        ${atPart} ${waypointPart} ${curvePart} ${easePart} ${strengthPart} ]]`;
+                return `        ${atPart} ${waypointPart} ${curvePart} ${easePart} ${strengthPart} } `;
             }).join('\n');
             
             if (document.getElementById('returnToStart').checked) {
-                segmentsCode += '\n        0 0 at          1 waypoint        [[ 0.0 0.0 0.0 0.0 curve                 0 ease   0.00 0.00 strength          ]]';
+                segmentsCode += '\n        0 0 at          1 waypoint        { 0.0 0.0 0.0 0.0 curve                 0 ease   0.00 0.00 strength          } ';
             }
             
             // Wrap in path and segments markers
@@ -636,7 +636,7 @@ path]`;
                 points.push(firstPoint);
                 
                 lines.forEach((line) => {
-                    // Updated regex to handle double brackets [[ ]] format
+                    // Updated regex to handle double brackets { } format
                     const match = line.match(/(-?\d+)\s+(-?\d+)\s+at\s+(\d+)\s+waypoint\s+\[\[\s*([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+curve\s+(\d+)\s+ease\s+([\d.]+)\s+([\d.]+)\s+strength\s*\]\]/);
                     
                     if (match) {

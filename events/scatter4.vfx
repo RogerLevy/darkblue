@@ -4,7 +4,7 @@ enemy20 tweak class
     360. rnd swap vec vx 2! ;
 
 : %enemy
-    class @ spawn [[ 2. scatter ]] ;
+    class @ spawn { 2. scatter } ;
 
 :event
     %enemy

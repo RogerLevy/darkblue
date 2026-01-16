@@ -1,5 +1,6 @@
 require %vfxland5%/lib/claude-math.vfx
 
+BITMAP %project%/dat/gfx/tri.png
 tri.png 17 17 +tileset tri.ts
 
 class: %tri

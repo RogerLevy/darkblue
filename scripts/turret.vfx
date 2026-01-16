@@ -8,8 +8,14 @@
 \ - Dual firing modes - pea shooter (1 energy) vs charged shots (based on level)
 
 require scripts\shot.vfx
+require scripts\missile1.vfx
+require scripts\missile2.vfx
 require tween.vfx
 require scripts\ship.vfx
+REQUIRE %project%/scripts/bar.vfx
+
+BITMAP %project%/dat/gfx/turret.png
+BITMAP %project%/dat/gfx/bar.png
 
 class: %turret
     %actor derive
@@ -35,7 +41,7 @@ variable charge-key
 
 20 tweak charge-delay
 
-create dir-buttons 2 cells array[
+create dir-buttons %int2 array[
     \ key , angle ,
     <l> , 0. ,
     <.> , 45. ,
@@ -68,7 +74,7 @@ array] drop
 : fire-large ( atk - ) *shoot* 8. %missile2 shoot ;
 
 : laser-physics
-    owner @ [[ x 2@ vx 2@ 2+ ]] x 2!
+    owner @ { x 2@ vx 2@ 2+ } x 2!
     owner @ -> a @ a ! ;
 
 : fire-thin ( atk - )
@@ -106,7 +112,7 @@ array] drop
             0.5 passed? -exit
             me unload ;
 
-create charge-levels 4 cells array[
+create charge-levels %int array[
     \ charge , cost , atk , xt ,
     10  , 0 , 0 ,   ' drop ,
     20  , 10 , 5 ,   ' fire-medium , \ medium projectile, damages one enemy
@@ -115,10 +121,10 @@ create charge-levels 4 cells array[
     100 ,  100 , 100 ,  ' fire-wide ,   \ wide laser cannon, damages multiple enemies
 array] drop
 
-: >charge  charge-levels [] @ ;
-: >cost  charge-levels [] cell+ @ ;
-: >atk  charge-levels [] cell+ cell+ @ ;
-: >fire-xt  charge-levels [] cell+ cell+ cell+ @ ;
+: >charge   4 * charge-levels el@ ;
+: >cost     4 * 1 + charge-levels el@ ;
+: >atk      4 * 2 + charge-levels el@ ;
+: >fire-xt  4 * 3 + charge-levels el@ ;
 
 charge-levels #items cell array bars
 
@@ -128,12 +134,12 @@ charge-levels #items cell array bars
     loop ;
 
 : !bars ( - )
-    owner @ 13 -13 owner @ -> vx 2@ 2.> 2+ from
+    owner @ 13 -13 owner @ -> vx 2@ 2>i 2+ from
     bars #items 1 do
         i charge-level @ <= if
-            i bars [] @ [[ at@ 2>. x 2! ]]
+            i bars [] @ { at@ 2>p x 2! } 
         else
-            i bars [] @ [[ -9999. -9999. x 2! ]]
+            i bars [] @ { -9999. -9999. x 2! } 
         then
         0 bar.png bmph 1 + negate +at 
     loop ;
@@ -251,7 +257,7 @@ charge-levels #items cell array bars
     a @ p>f aim @ p>f 0.2e alerp f>p a ! ;
 
 : !pos ( - )
-    a @ 32. vec  owner @ [[ x 2@ vx 2@ 2+ ]] 2+ x 2!
+    a @ 32. vec  owner @ { x 2@ vx 2@ 2+ } 2+ x 2!
     a @ 360. umod 180. >= if 1. 1. x 2+! then
     ?shake
     x 2@ 2i x 2! ;

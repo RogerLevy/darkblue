@@ -49,7 +49,7 @@ Uses VFXLand 5's custom Forth OOP:
 - `class:` ... `class;` - Class definitions
 - `property` - Instance variables
 - `m:` ... `::` - Method declarations and implementations
-- `me [[` ... `]]` - Object context scoping
+- `me { ` ... `}` - Object context scoping
 - `'s propertyname` - Property access syntax
 
 ### Development Tools

@@ -1,0 +1,9 @@
+BITMAP %project%/dat/gfx/text-resilient.png
+
+class: %text-resilient
+    %actor derive
+
+    :: init
+        text-resilient.png bmp ! ;
+
+class;

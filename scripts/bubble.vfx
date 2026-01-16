@@ -12,7 +12,7 @@ class: %bubble
 public
 
 : *bubble ( - %bubble )
-    %bubble one [[ 10. r ! me ]] ;
+    %bubble one { 10. r ! me } ;
 
 : bubbles
     actives> me %bubble is? -exit draw-bubble ;

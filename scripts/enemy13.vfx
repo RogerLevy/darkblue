@@ -1,3 +1,5 @@
+    BITMAP %project%/dat/gfx/enemy13.png
+
 class: %enemy13
     %enemy derive
 

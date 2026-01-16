@@ -1,8 +1,10 @@
+BITMAP %project%/dat/gfx/orb.png
+BITMAP %project%/dat/gfx/orb2.png
 orb.png 13 13 +tileset orb.ts
 
 \ orb.ts animation orb.anm  0 3 range, 3 0 range, 
 
-create orb-anim cell array[
+create orb-anim %int array[
     \ orb1.png , orb1.png , orb2.png , orb4.png , orb3.png , orb4.png , orb2.png , 
     orb.ts 0 tile ,
     orb.ts 1 tile ,
