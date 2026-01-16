@@ -22,6 +22,8 @@ class: %viewport %ui-box derive
 
     :: _draw
         mode @ -exit
+        gamemode @ >r
+        mode @ gamemode ! 
         m{ e{
             0 0 0 0 sp@ 3 cells + dup cell- dup cell- dup cell- al_get_clipping_rectangle
             abspos 2>i zoom @ dup 2*``
@@ -34,6 +36,7 @@ class: %viewport %ui-box derive
             al_set_clipping_rectangle 
             r>
         e} m}
+        r> gamemode ! 
         throw ;
 class;
 

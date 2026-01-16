@@ -108,4 +108,5 @@ public
 
 redef : title
     title/ ( skippable ) movie 
-    show> ?skip step backdrop starfield sprites ;
+    show> backdrop starfield sprites 
+    work> ?skip step ;
