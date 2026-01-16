@@ -40,4 +40,6 @@ debug @ [if]
     require %project%/../../workspace/workspace.vfx
     require %idir%/viewport.vfx
     workspace load-all
+    frame rs
+    display ALLEGRO_MAXIMIZED true al_set_display_flag drop
 [then]
