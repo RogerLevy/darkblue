@@ -29,11 +29,15 @@ require %idir%/starfield.vfx
 \ require path.vfx
 \ require enemies.vfx
 
-\ Automated script and asset loads
-\ This includes all scripts in modes\.
-\ load-project
-
 require %idir%/title.vfx
 
 redef : main
     title ;
+
+debug @ [if]
+    \ title
+
+    require %project%/../../workspace/workspace.vfx
+    workspace
+    load-all
+[then]

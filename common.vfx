@@ -55,11 +55,11 @@ variable charge
 \ Input names
 aka <start> <enter>
 
-\ HUD
+\ status bar
 : hrs  gametime 360000000 m/ ;
 : mins  gametime 60000000 m/ 60 mod ;
 : secs  gametime 1000000 m/ 60 mod ;
-: hud
+: status
     15 color
     \ 0 310 at s[ 480 8 / for space loop s] print    
     8 0 at
