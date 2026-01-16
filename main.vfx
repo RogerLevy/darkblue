@@ -38,6 +38,6 @@ debug @ [if]
     \ title
 
     require %project%/../../workspace/workspace.vfx
-    workspace
-    load-all
+    require %idir%/viewport.vfx
+    workspace load-all
 [then]

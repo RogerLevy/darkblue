@@ -6,12 +6,34 @@
 		"FLAGS":	0,
 		"children":	[{
 				"class":	"%DESKTOP",
-				"X":	-271,
-				"Y":	206,
+				"X":	-276,
+				"Y":	230,
 				"FLAGS":	2,
 				"CLR":	1277887231,
-				"forth":	"me to desktop"
-			} , {
+				"forth":	"me to desktop",
+				"children":	[{
+						"class":	"%TOGGLEBOX",
+						"X":	314,
+						"Y":	-152.5,
+						"FLAGS":	0,
+						"W":	96,
+						"H":	8,
+						"TXT":	"Title Screen",
+						"CLR":	-1,
+						"EDITABLE":	-1,
+						"CLEAR-ON-EDIT":	0,
+						"OPN":	0,
+						"children":	[{
+								"class":	"%VIEWPORT",
+								"X":	-3.5,
+								"Y":	13.5,
+								"FLAGS":	2,
+								"W":	460,
+								"H":	345,
+								"script":	"gui/title-viewport.vfx"
+							}]
+					}]
+			}, {
 				"class":	"%HUD",
 				"X":	0,
 				"Y":	0,
@@ -357,5 +379,5 @@
 					}]
 			}]
 	},
-	"autoloads":	["bitmap ..\\..\\workspace\\sony-cxa.png"]
+	"autoloads":	["bitmap .\\dat\\gfx\\backdrop.png", "sample .\\dat\\smp\\shoot.ogg", "sample .\\dat\\smp\\snd-01.ogg", "sample .\\dat\\smp\\snd-02.ogg", "sample .\\dat\\smp\\snd-03.ogg", "sample .\\dat\\smp\\snd-04.ogg", "sample .\\dat\\smp\\snd-05.ogg", "sample .\\dat\\smp\\snd-06.ogg", "sample .\\dat\\smp\\snd-07.ogg", "sample .\\dat\\smp\\snd-08.ogg", "sample .\\dat\\smp\\snd-09.ogg", "bitmap .\\dat\\gfx\\star.png", "bitmap .\\dat\\gfx\\title-arrow.png", "bitmap .\\dat\\gfx\\text-normal.png", "bitmap .\\dat\\gfx\\text-resilient.png", "bitmap .\\dat\\gfx\\title.png", "TITLE.PNG 291 41 tileset-from TITLE.TS", "bitmap ..\\..\\workspace\\micro-icons.png", "MICRO-ICONS.PNG 20 20 tileset-from MICRO-ICONS.TS", "bitmap ..\\..\\workspace\\cursors.png", "CURSORS.PNG 32 32 tileset-from CURSORS.TS", "bitmap ..\\..\\workspace\\painter-cursors.png", "PAINTER-CURSORS.PNG 32 32 tileset-from PAINTER-CURSORS.TS", "sample .\\dat\\smp\\shoot.ogg", "sample .\\dat\\smp\\snd-01.ogg", "sample .\\dat\\smp\\snd-02.ogg", "sample .\\dat\\smp\\snd-03.ogg", "sample .\\dat\\smp\\snd-04.ogg", "sample .\\dat\\smp\\snd-05.ogg", "sample .\\dat\\smp\\snd-06.ogg", "sample .\\dat\\smp\\snd-07.ogg", "sample .\\dat\\smp\\snd-08.ogg", "sample .\\dat\\smp\\snd-09.ogg", "sample .\\dat\\smp\\shoot.ogg", "sample .\\dat\\smp\\snd-01.ogg", "sample .\\dat\\smp\\snd-02.ogg", "sample .\\dat\\smp\\snd-03.ogg", "sample .\\dat\\smp\\snd-04.ogg", "sample .\\dat\\smp\\snd-05.ogg", "sample .\\dat\\smp\\snd-06.ogg", "sample .\\dat\\smp\\snd-07.ogg", "sample .\\dat\\smp\\snd-08.ogg", "sample .\\dat\\smp\\snd-09.ogg", "sample .\\dat\\smp\\shoot.ogg", "sample .\\dat\\smp\\snd-01.ogg", "sample .\\dat\\smp\\snd-02.ogg", "sample .\\dat\\smp\\snd-03.ogg", "sample .\\dat\\smp\\snd-04.ogg", "sample .\\dat\\smp\\snd-05.ogg", "sample .\\dat\\smp\\snd-06.ogg", "sample .\\dat\\smp\\snd-07.ogg", "sample .\\dat\\smp\\snd-08.ogg", "sample .\\dat\\smp\\snd-09.ogg", "sample .\\dat\\smp\\shoot.ogg", "sample .\\dat\\smp\\snd-01.ogg", "sample .\\dat\\smp\\snd-02.ogg", "sample .\\dat\\smp\\snd-03.ogg", "sample .\\dat\\smp\\snd-04.ogg", "sample .\\dat\\smp\\snd-05.ogg", "sample .\\dat\\smp\\snd-06.ogg", "sample .\\dat\\smp\\snd-07.ogg", "sample .\\dat\\smp\\snd-08.ogg", "sample .\\dat\\smp\\snd-09.ogg", "bitmap ..\\..\\workspace\\sony-cxa.png"]
 }

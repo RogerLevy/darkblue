@@ -1,0 +1,45 @@
+class: %viewport %ui-box derive
+    works-with %_micro
+    prop mode :ref %mode
+    prop active <readonly
+
+    :: on-focus  active on ;
+    :: on-blur   active off ;
+
+    :: _mousedown 
+        lmb = -exit
+        <space> held? ?exit
+        me focus ;
+
+    :: _process  
+        active @ -exit
+        mode @ -exit 
+        gamemode @ >r
+        mode @ gamemode ! 
+        mode @ -> beha @ dup if catch then
+        r> gamemode ! 
+        throw ;
+
+    :: _draw
+        mode @ -exit
+        m{ e{
+            0 0 0 0 sp@ 3 cells + dup cell- dup cell- dup cell- al_get_clipping_rectangle
+            abspos 2>i zoom @ dup 2*``
+            w 2@ 2>i zoom @ dup 2*`` al_set_clipping_rectangle 
+                abspos 2p>f 1e 1e 0e transform
+                cls 
+                mode @ -> drw @
+                dup if catch dup if nip then then 
+            >r
+            al_set_clipping_rectangle 
+            r>
+        e} m}
+        throw ;
+class;
+
+0 %viewport :construct
+    %mode make mode ! 
+    mode @ gamemode ! ;
+
+: *viewport ( w h - viewport )
+    %viewport *add { 2>p w 2! me } ;
